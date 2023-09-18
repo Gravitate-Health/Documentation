@@ -42,7 +42,7 @@ Refer to the [registry access Readme](./registry-access.md) to configure the clu
 
 Keycloak is the identity provider and the first service to be deployed.
 
-Refer to the [Keycloak Readme](./registry-access.md) to deploy and configure Keycloak.
+Refer to the [Keycloak Readme](./keycloak.md) to deploy and configure Keycloak.
 
 ### Deploy FHIR server(s) (Helm chart)
 ---
@@ -69,12 +69,19 @@ List of services to deploy:
   - [Manual Preprocessor](https://github.com/Gravitate-Health/preprocessing-service-manual)
   - [Automatic Preprocessor](https://github.com/Gravitate-Health/preprocessing-service-mvp2)
 - FHIR:
-  - [FHIR ePI](https://github.com/Gravitate-Health/hapi-fhir-jpaserver-starter-epi)
-  - [FHIR IPS](https://github.com/Gravitate-Health/hapi-fhir-jpaserver-starter-ips)
   - [Fhir Connector](https://github.com/Gravitate-Health/fhir-connector)
 - Other:
   - [Swagger UI](https://github.com/Gravitate-Health/swagger-deployment)
   - [Keycloak Registration](https://github.com/Gravitate-Health/keycloak-registration)
   - [Therminology shortlist](https://github.com/Gravitate-Health/terminology-service)
 
-For each service, you will find a folder in each repository called `kubernetes`
+For each service, you will find a folder in each repository called `kubernetes` or `yamls`. These service have generic deployments and the process is always the same. The kubernetes resources must be deployed in certain order:
+
+1. Secrets
+2. ConfigMaps
+3. Service
+4. StatefulSet
+5. Deployment/Cronjob
+6. Virtual Service
+
+Apply the files of each repository and everything will be deployed. Refer to each repository README to edit configuration, environment variables and see further deployment details .
