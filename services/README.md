@@ -1,9 +1,12 @@
-# FOSPS Services and APIs
+# FOSPS Services and APIs Documentation
 
 This guide will explain each service and the communication between them. FOSPS has been developed following a microservices approach, and so, each service is responsible for different actions. We can categorize services in fosps like this:
 
-- [FOSPS Services and APIs](#fosps-services-and-apis)
-  - [Glossary](#glossary)
+# Table of contents
+
+- [FOSPS Services and APIs Documentation](#fosps-services-and-apis-documentation)
+- [Table of contents](#table-of-contents)
+- [List of services/APIs](#list-of-servicesapis)
   - [Core Services](#core-services)
     - [Keycloak](#keycloak)
     - [Keycloak Registration/Middleware](#keycloak-registrationmiddleware)
@@ -16,38 +19,19 @@ This guide will explain each service and the communication between them. FOSPS h
     - [Focusing manager (Coupled LEE)](#focusing-manager-coupled-lee)
     - [Preprocessors](#preprocessors)
     - [Lenses selectors](#lenses-selectors)
-  - ["Infrastructure" services](#infrastructure-services)
-    - [istio](#istio)
-    - [Github Actions](#github-actions)
   - [Content Trust](#content-trust)
-    - [Content trust](#content-trust-1)
-    - [Audit component](#audit-component)
   - [Other:](#other)
-    - [ePI search](#epi-search)
     - [SwaggerUI](#swaggerui)
+  - [Infrastructure services](#infrastructure-services)
+    - [Istio](#istio)
+    - [Monitor](#monitor)
+    - [Github Actions](#github-actions)
+  - [Glossary](#glossary)
 
 
 ![FOSPS Components Diagram](./img/FOSPS-Components_diagram.png)
 
-
-- Core services
-  - Keycloak
-  - Keycloak-registration
-  - Authorization middleware
-- FHIR services:
-  - FHIR IPS server
-  - FHIR ePI server
-  - FHIR Connector
-  - Therminology server
-
-## Glossary
-
-- ePI: Electronic Product Information
-- IPS: International Patient Summary
-- LEE: Lens Execution Environment
-- IAM: Identity and Access Management
-- OIDC: OpenID Connect
-- RBAC: Role Based Access Control
+# List of services/APIs
 
 ## Core Services
 
@@ -73,6 +57,8 @@ These are the operations enabled by this service:
 - Login
 - Password reset/forgotten
 - Get/Edit/Delete user
+
+This service reduces the attack surface for the IAM server, as operations are very limited and controlled. Further Admin operations can be made via the Web interface with an admin account, always having the required permissions.
 
 [Swagger UI for Keycloak Registration](https://fosps.gravitatehealth.eu/swagger-fosps/#/)
 
@@ -149,22 +135,63 @@ Currently there are two preprocessors:
 
 Lenses selector host and return lenses. Lenses are pieces of structured code (following a defined standard), which receive as input a preprocessed ePI and an IPS, and focus the ePI leaflet based on patient data like gender, age, health conditions, medications, allergies, intolerances, etc. 
 
-## "Infrastructure" services
+List of available lenses, categorized by selector:
+- Lens selector MVP2:
+  - Pregnancy Lens
+  - Diabetes Lens
+  - VIH lens
 
-###  istio
-
-### Github Actions
-
+Lenses consists in a javascript module which must export an object with two properties: `enhance` and `getSpecification`, which are functions that enhance an ePI and return the name and version lens, respectively. LEE in [focusing manager](#focusing-manager-coupled-lee) is responsible for executing this code in the expected way, and throw an error if the lens raised an error.
 
 ## Content Trust
 
-### Content trust
-
-### Audit component
-
+[Work in Progress]
 
 ## Other:
 
-### ePI search
-
 ### SwaggerUI
+
+Simple [Swagger UI deployment](https://github.com/Gravitate-Health/swagger-deployment) to host all OpenAPI Specifications.
+
+[Link](https://fosps.gravitatehealth.eu/swagger-fosps/) to the Swagger UI web.
+
+## Infrastructure services
+
+The services in this sections don't provide a direct functionality to FOSPS or to the Gravitate Health project, but they are equally necessary for the platform to work as expected. They provide transversal functionality to the whole FOSPS platform.
+
+### Istio
+
+[Istio](https://istio.io) Istio is an open-source service mesh platform that is designed to improve the management, security, and observability of microservices-based applications. Istio provides the communicating network interface for the containers hosting the services, letting and blocking the communication between services and internet based on defined rules, and also acts as a distributed API gateway inside the kubernetes cluster.
+
+[Istio configuration and deployment details repository](https://github.com/Gravitate-Health/istio)
+
+### Monitor
+
+The [Grafana](https://grafana.com) + [Prometheus](https://prometheus.io) stack is a popular combination of two open-source tools often used for monitoring and observability in modern IT and DevOps environments. These tools, Grafana and Prometheus, work together to collect, store, visualize, and alert on metrics and data from various systems and applications.
+
+In FOSPS, the stack is deployed to collect metrics and logs from the different services of the platform.
+
+[Grafana + Prometheus deployment & config](https://github.com/Gravitate-Health/Monitor)
+
+### Github Actions
+
+All repositories with developments and/or deployments have Github Actions to enable DevSecOps operations. Automated pipelines to check vulnerabilities, leaked secrets, compile and deploy automatically new updates were develop to enable fast development and deployment, following an agile software development methodology.
+
+Github Actions currently contain:
+- Automatic semantic versioning & Git tagging
+- Docker image build and push to GH registry
+- Scurity scan with Trivi: Vulnerabilities (packages and OS), secrets and misconfigurations.
+
+You can find the Github actions under the `.github/actions` folder in each repository.
+
+
+## Glossary
+
+- ePI: Electronic Product Information
+- IPS: International Patient Summary
+- LEE: Lens Execution Environment
+- IAM: Identity and Access Management
+- OIDC: OpenID Connect
+- RBAC: Role Based Access Control
+- GH: Gravitate Health
+- IG: Implementation Guide
