@@ -1,0 +1,1908 @@
+{
+	"info": {
+		"_postman_id": "adf591ee-7194-41a9-98f1-e3fe85ca162e",
+		"name": "FOSPS development PUBLIC",
+		"description": "FOSPS Development collection.\n\nAuthentication is automated, and all requests will send the JWT if needed.\n\nYou have to set the following collection variables (AND ONLY THESE ONES):  \n\\- **userEmail**  \n\\- **userPassword**\n\nContact Support:  \nName: Guillermo Mejías  \nEmail: [gmejias@lst.tfo.upm.es](https://mailto:gmejias97@gmail.com)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15510601",
+		"_collection_link": "https://lst-gmejias.postman.co/workspace/97d3388c-f778-416a-83ec-a40d0db67ef1/collection/15510601-adf591ee-7194-41a9-98f1-e3fe85ca162e?action=share&source=collection_link&creator=15510601"
+	},
+	"item": [
+		{
+			"name": "/users/api",
+			"item": [
+				{
+					"name": "Create user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Testuser\",\r\n  \"lastName\": \"postman\",\r\n  \"password\": \"{{userPassword}}\",\r\n  \"email\": \"{{userEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{usersPrefix}}{{usersEndpoint}}",
+							"host": [
+								"{{baseUrl}}{{usersPrefix}}{{usersEndpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{usersPrefix}}{{usersEndpoint}}/{{userId}}",
+							"host": [
+								"{{baseUrl}}{{usersPrefix}}{{usersEndpoint}}"
+							],
+							"path": [
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch user",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fhirPatient\": {\r\n        \"resourceType\": \"Parameters\",\r\n        \"parameter\": [\r\n            {\r\n                \"name\": \"operation\",\r\n                \"part\": [\r\n                    {\r\n                        \"name\": \"type\",\r\n                        \"valueString\": \"add\"\r\n                    },\r\n                    {\r\n                        \"name\": \"path\",\r\n                        \"valueString\": \"Patient\"\r\n                    },\r\n                    {\r\n                        \"name\": \"name\",\r\n                        \"valueString\": \"birthDate\"\r\n                    },\r\n                    {\r\n                        \"name\": \"value\",\r\n                        \"valueDate\": \"1931-01-01\"\r\n                    }\r\n                ]\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{usersPrefix}}{{usersEndpoint}}/{{userId}}",
+							"host": [
+								"{{baseUrl}}{{usersPrefix}}{{usersEndpoint}}"
+							],
+							"path": [
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch User",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{usersPrefix}}{{usersEndpoint}}",
+							"host": [
+								"{{baseUrl}}{{usersPrefix}}{{usersEndpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password / Forgot password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{usersPrefix}}{{resetPasswordEndpoint}}?email={{userEmail}}",
+							"host": [
+								"{{baseUrl}}{{usersPrefix}}{{resetPasswordEndpoint}}"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{userEmail}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Verification Email",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{usersPrefix}}{{sendVerificationEmailEndpoint}}?email={{userEmail}}",
+							"host": [
+								"{{baseUrl}}{{usersPrefix}}{{sendVerificationEmailEndpoint}}"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{userEmail}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/auth/api",
+			"item": [
+				{
+					"name": "Sign in",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{clientId}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "{{grantType}}",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "{{userEmail}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{userPassword}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/api/auth",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"api",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "{{clientId}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "refresh_token",
+									"type": "text"
+								},
+								{
+									"key": "refresh_token",
+									"value": "{{jwtRefreshToken}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/realms/GravitateHealth/protocol/openid-connect/token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"realms",
+								"GravitateHealth",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/ips/api/fhir",
+			"item": [
+				{
+					"name": "Patient",
+					"item": [
+						{
+							"name": "{{id}}",
+							"item": [
+								{
+									"name": "Get Patient by $summary",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/ips/api/fhir/Patient/$summary?identifier=alicia-1",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"ips",
+												"api",
+												"fhir",
+												"Patient",
+												"$summary"
+											],
+											"query": [
+												{
+													"key": "identifier",
+													"value": "alicia-1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Patient IPS by $document",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/ips/api/fhir/Composition/gravitate-Alicia/$document",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"ips",
+												"api",
+												"fhir",
+												"Composition",
+												"gravitate-Alicia",
+												"$document"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Patient",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n      \"id\": \"1234567890ABCDEF\",\r\n      \"resourceType\": \"Patient\",\r\n      \"active\": true,\r\n      \"name\": [\r\n        {\r\n          \"use\": \"usual\"\r\n        }\r\n      ]\r\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/ips/api/fhir/Patient/1234567890ABCDEF",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"ips",
+												"api",
+												"fhir",
+												"Patient",
+												"1234567890ABCDEF"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get all Patients",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/ips/api/fhir/Patient/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"ips",
+										"api",
+										"fhir",
+										"Patient",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Patient",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"resourceType\": \"Patient\",\r\n    \"active\": true,\r\n    \"name\": [\r\n        {\r\n            \"use\": \"usual\",\r\n            \"family\": \"Doe\",\r\n            \"given\": [\r\n                \"John\"\r\n            ]\r\n        }\r\n    ],\r\n    \"gender\": \"male\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/ips/api/fhir/Patient",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"ips",
+										"api",
+										"fhir",
+										"Patient"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Patient and dependant resources",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/ips/api/fhir/Patient/PATIENT_ID?_cascade=delete",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"ips",
+										"api",
+										"fhir",
+										"Patient",
+										"PATIENT_ID"
+									],
+									"query": [
+										{
+											"key": "_cascade",
+											"value": "delete"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Bundle",
+					"item": [
+						{
+							"name": "Delete Bundle",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/ips/api/fhir/Bundle/{{id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"ips",
+										"api",
+										"fhir",
+										"Bundle",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get Practitioner",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/ips/api/fhir/Practitioner/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ips",
+								"api",
+								"fhir",
+								"Practitioner",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Condition",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ips/api/fhir/Condition/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ips",
+								"api",
+								"fhir",
+								"Condition",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Patient",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/fhir+json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"resourceType\": \"Parameters\",\r\n        \"parameter\": [\r\n            {\r\n                \"name\": \"operation\",\r\n                \"part\": [\r\n                    {\r\n                        \"name\": \"type\",\r\n                        \"valueString\": \"add\"\r\n                    },\r\n                    {\r\n                        \"name\": \"path\",\r\n                        \"valueString\": \"Patient\"\r\n                    },\r\n                    {\r\n                        \"name\": \"name\",\r\n                        \"valueString\": \"birthDate\"\r\n                    },\r\n                    {\r\n                        \"name\": \"value\",\r\n                        \"valueDate\": \"1930-01-01\"\r\n                    }\r\n                ]\r\n            }\r\n        ]\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ips/api/fhir/Patient/1893c067-deb4-4915-bbf0-cef5a8cf8f4d",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ips",
+								"api",
+								"fhir",
+								"Patient",
+								"1893c067-deb4-4915-bbf0-cef5a8cf8f4d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/epi/api/fhir",
+			"item": [
+				{
+					"name": "Bundle",
+					"item": [
+						{
+							"name": "{{id}}",
+							"item": [
+								{
+									"name": "Delete EPI Bundle",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/epi/api/fhir/Bundle/{{ID}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"epi",
+												"api",
+												"fhir",
+												"Bundle",
+												"{{ID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get EPI By ID",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/epi/api/fhir/Bundle/7642",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"epi",
+												"api",
+												"fhir",
+												"Bundle",
+												"7642"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get EPI bundle",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/epi/api/fhir/Bundle/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"epi",
+										"api",
+										"fhir",
+										"Bundle",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create EPI Bundle",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"resourceType\": \"Bundle\",\r\n    \"active\": true,\r\n    \"name\": [\r\n        {\r\n            \"use\": \"usual\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/epi/api/fhir/Bundle",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"epi",
+										"api",
+										"fhir",
+										"Bundle"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "focusing",
+			"item": [
+				{
+					"name": "Examples",
+					"item": [
+						{
+							"name": "Diabetes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}/bundlepackageleaflet-2d49ae46735143c1323423b7aea24165?preprocessors=preprocessing-service-manual&lenses=lens-selector-mvp2_diabetes&patientIdentifier=Cecilia-1",
+									"host": [
+										"{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}"
+									],
+									"path": [
+										"bundlepackageleaflet-2d49ae46735143c1323423b7aea24165"
+									],
+									"query": [
+										{
+											"key": "preprocessors",
+											"value": "preprocessing-service-manual"
+										},
+										{
+											"key": "lenses",
+											"value": "lens-selector-mvp2_diabetes"
+										},
+										{
+											"key": "patientIdentifier",
+											"value": "Cecilia-1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "HIV",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}/bundlepackageleaflet-2d49ae46735143c1323423b7aea24165?preprocessors=preprocessing-service-manual&lenses=lens-selector-mvp2_HIV&patientIdentifier=Pedro-1",
+									"host": [
+										"{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}"
+									],
+									"path": [
+										"bundlepackageleaflet-2d49ae46735143c1323423b7aea24165"
+									],
+									"query": [
+										{
+											"key": "preprocessors",
+											"value": "preprocessing-service-manual"
+										},
+										{
+											"key": "lenses",
+											"value": "lens-selector-mvp2_HIV"
+										},
+										{
+											"key": "patientIdentifier",
+											"value": "Pedro-1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pregnancy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}/bundlepackageleaflet-2d49ae46735143c1323423b7aea24165?preprocessors=preprocessing-service-manual&lenses=lens-selector-mvp2_pregnancy&patientIdentifier=alicia-1",
+									"host": [
+										"{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}"
+									],
+									"path": [
+										"bundlepackageleaflet-2d49ae46735143c1323423b7aea24165"
+									],
+									"query": [
+										{
+											"key": "preprocessors",
+											"value": "preprocessing-service-manual"
+										},
+										{
+											"key": "lenses",
+											"value": "lens-selector-mvp2_pregnancy"
+										},
+										{
+											"key": "patientIdentifier",
+											"value": "alicia-1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pregnancy + Diabetes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}/bundlepackageleaflet-2d49ae46735143c1323423b7aea24165?preprocessors=preprocessing-service-manual&lenses=lens-selector-mvp2_pregnancy&lenses=lens-selector-mvp2_diabetes&patientIdentifier=Cecilia-1",
+									"host": [
+										"{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}"
+									],
+									"path": [
+										"bundlepackageleaflet-2d49ae46735143c1323423b7aea24165"
+									],
+									"query": [
+										{
+											"key": "preprocessors",
+											"value": "preprocessing-service-manual"
+										},
+										{
+											"key": "lenses",
+											"value": "lens-selector-mvp2_pregnancy"
+										},
+										{
+											"key": "lenses",
+											"value": "lens-selector-mvp2_diabetes"
+										},
+										{
+											"key": "patientIdentifier",
+											"value": "Cecilia-1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Executes preprocessing on an ePI, adding semantic annotation to the ePI's leaflet sections. Desired response \"Content-Type\" (JSON or HTML) must be sent in the \"Accept\" header.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}{{focusingPrefix}}{{preprocessingEndpoint}}/:epiId?preprocessors=preprocessing-service-manual",
+							"host": [
+								"{{baseUrl}}{{focusingPrefix}}{{preprocessingEndpoint}}"
+							],
+							"path": [
+								":epiId"
+							],
+							"query": [
+								{
+									"key": "preprocessors",
+									"value": "preprocessing-service-manual",
+									"description": "List of preprocessors to be executed on the ePI. If parameter is absent, all preprocessors will be executed."
+								},
+								{
+									"key": "preprocessors",
+									"value": "preprocessor-team1",
+									"description": "List of preprocessors to be executed on the ePI. If parameter is absent, all preprocessors will be executed.",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "epiId",
+									"value": "bundlepackageleaflet-2d49ae46735143c1323423b7aea24165"
+								}
+							]
+						},
+						"description": "Executes preprocessing on an ePI, adding semantic annotation to the ePI's leaflet sections. Desired response \"Content-Type\" (JSON or HTML) must be sent in the \"Accept\" header."
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/focusing/preprocessing/:epiId?preprocessors=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"focusing",
+										"preprocessing",
+										":epiId"
+									],
+									"query": [
+										{
+											"key": "preprocessors",
+											"value": "<string>",
+											"description": "List of preprocessors to be executed on the ePI. If parameter is absent, all preprocessors will be executed."
+										}
+									],
+									"variable": [
+										{
+											"key": "epiId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"epiKey\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/focusing/preprocessing/:epiId?preprocessors=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"focusing",
+										"preprocessing",
+										":epiId"
+									],
+									"query": [
+										{
+											"key": "preprocessors",
+											"value": "<string>",
+											"description": "List of preprocessors to be executed on the ePI. If parameter is absent, all preprocessors will be executed."
+										}
+									],
+									"variable": [
+										{
+											"key": "epiId"
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"messsage\": \"Given data is invalid\",\n  \"reason\": \"Reason\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Lists all available preprocessors.",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}{{focusingPrefix}}{{preprocessingEndpoint}}",
+							"host": [
+								"{{baseUrl}}{{focusingPrefix}}{{preprocessingEndpoint}}"
+							]
+						},
+						"description": "Lists all available preprocessors."
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/focusing/preprocessing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"focusing",
+										"preprocessing"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"preprocessors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Lists all available lenses.",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}{{focusingPrefix}}{{lensesEndpoint}}",
+							"host": [
+								"{{baseUrl}}{{focusingPrefix}}{{lensesEndpoint}}"
+							]
+						},
+						"description": "Lists all available lenses."
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/focusing/lenses",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"focusing",
+										"lenses"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"lenses\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Preprocesses and focuses an ePI based on an IPS. Desired response \"Content-Type\" (JSON or HTML) must be sent in the \"Accept\" header.",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}/bundlepackageleaflet-38fbd67f0d3e64f32230141d1621df57?preprocessors=preprocessing-service-manual&lenses=lens-selector-mvp2_diabetes&patientIdentifier=Cecilia-1",
+							"host": [
+								"{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}"
+							],
+							"path": [
+								"bundlepackageleaflet-38fbd67f0d3e64f32230141d1621df57"
+							],
+							"query": [
+								{
+									"key": "preprocessors",
+									"value": "preprocessing-service-example",
+									"disabled": true
+								},
+								{
+									"key": "preprocessors",
+									"value": "preprocessing-service-manual"
+								},
+								{
+									"key": "lenses",
+									"value": "lens-selector-mvp2_diabetes"
+								},
+								{
+									"key": "lenses",
+									"value": "lens-selector-example_blank",
+									"disabled": true
+								},
+								{
+									"key": "patientIdentifier",
+									"value": "Cecilia-1"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Preprocesses and focuses an ePI based on an IPS. Desired response \"Content-Type\" (JSON or HTML) must be sent in the \"Accept\" header."
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/focusing/focus/:epiId?preprocessors=<string>&lenses=<string>&ipsId=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"focusing",
+										"focus",
+										":epiId"
+									],
+									"query": [
+										{
+											"key": "preprocessors",
+											"value": "<string>",
+											"description": "List of preprocessors to be executed on the ePI. If parameter is absent, all preprocessors will be executed."
+										},
+										{
+											"key": "lenses",
+											"value": "<string>",
+											"description": "(Required) List of lenses to be applied."
+										},
+										{
+											"key": "ipsId",
+											"value": "<string>",
+											"description": "(Required) IPS id."
+										}
+									],
+									"variable": [
+										{
+											"key": "epiId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"epiKey\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/focusing/focus/:epiId?preprocessors=<string>&lenses=<string>&ipsId=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"focusing",
+										"focus",
+										":epiId"
+									],
+									"query": [
+										{
+											"key": "preprocessors",
+											"value": "<string>",
+											"description": "List of preprocessors to be executed on the ePI. If parameter is absent, all preprocessors will be executed."
+										},
+										{
+											"key": "lenses",
+											"value": "<string>",
+											"description": "(Required) List of lenses to be applied."
+										},
+										{
+											"key": "ipsId",
+											"value": "<string>",
+											"description": "(Required) IPS id."
+										}
+									],
+									"variable": [
+										{
+											"key": "epiId"
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"messsage\": \"Given data is invalid\",\n  \"reason\": \"Reason\"\n}"
+						},
+						{
+							"name": "Preprocesses and focuses an ePI based on an IPS. Desired response \"Content-Type\" (JSON or HTML) must be sent in the \"Accept\" header.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}/:epiId?preprocessors=<string>&preprocessors=<string>&lenses=<string>&lenses=<string>&ipsId=<string>",
+									"host": [
+										"{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}"
+									],
+									"path": [
+										":epiId"
+									],
+									"query": [
+										{
+											"key": "preprocessors",
+											"value": "<string>"
+										},
+										{
+											"key": "preprocessors",
+											"value": "<string>"
+										},
+										{
+											"key": "lenses",
+											"value": "<string>"
+										},
+										{
+											"key": "lenses",
+											"value": "<string>"
+										},
+										{
+											"key": "ipsId",
+											"value": "<string>"
+										}
+									],
+									"variable": [
+										{
+											"key": "epiId",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'none'"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "151"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Apr 2023 12:53:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <title>Error</title>\n    </head>\n    <body>\n        <pre>Cannot GET /focus/:epiId</pre>\n    </body>\n</html>"
+						}
+					]
+				},
+				{
+					"name": "(TEST) Preprocesses and focuses an ePI based on an IPS. Desired response \"Content-Type\" (JSON or HTML) must be sent in the \"Accept\" header.",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"epi\": {\n        \"resourceType\": \"Bundle\",\n        \"identifier\": {\n            \"system\": \"urn:ietf:rfc:4122\",\n            \"value\": \"af195d58-49c7-4978-8622-389a1727426a\"\n        },\n        \"type\": \"document\",\n        \"timestamp\": \"2023-06-13T14:06:47.759+00:00\",\n        \"entry\": [\n            {\n                \"fullUrl\": \"urn:uuid:4475a3cd-209a-4749-979d-bb4ddac43b08\",\n                \"resource\": {\n                    \"resourceType\": \"Composition\",\n                    \"text\": {\n                        \"status\": \"generated\",\n                        \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><div><h1>Allergies and Intolerances</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>Allergies And Intolerances</caption><thead><tr><th>Allergen</th><th>Status</th><th>Category</th><th>Reaction</th><th>Severity</th><th>Comments</th><th>Onset</th></tr></thead><tbody><tr id=\\\"AllergyIntolerance-urn:uuid:0ebdc645-0240-4992-8901-8eb4755ebb5b\\\"><td> No information about allergies </td><td> active </td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div></div></div><div><h1>Medication List</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>Medication Summary: Medication Requests</caption><thead><tr><th>Medication</th><th>Status</th><th>Route</th><th>Sig</th><th>Comments</th><th>Authored Date</th></tr></thead><tbody></tbody></table><table class=\\\"hapiPropertyTable\\\"><caption>Medication Summary: Medication Statements</caption><thead><tr><th>Medication</th><th>Status</th><th>Route</th><th>Sig</th><th>Date</th></tr></thead><tbody><tr id=\\\"MedicationStatement-urn:uuid:448ba386-108f-44d4-ad61-8b2fe4254d32\\\"><td> No information about medications </td><td>Unknown</td><td></td><td></td><td></td></tr></tbody></table></div></div></div><div><h1>Problem List</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>Problem List</caption><thead><tr><th>Medical Problems</th><th>Status</th><th>Comments</th><th>Onset Date</th></tr></thead><tbody><tr id=\\\"Condition-urn:uuid:0b690005-9dd0-4749-b25c-33a038f5f2fd\\\"><td> Overweight (finding) </td><td> active </td><td></td><td> Mon Jan 01 00:00:00 GMT 2018 </td></tr></tbody></table></div></div></div><div><h1>History of Immunizations</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>Immunizations</caption><thead><tr><th>Immunization</th><th>Status</th><th>Dose Number</th><th>Manufacturer</th><th>Lot Number</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table></div></div></div><div><h1>History of Procedures</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>History Of Procedures</caption><thead><tr><th>Procedure</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table></div></div></div><div><h1>Medical Devices</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>Medical Devices</caption><thead><tr><th>Device</th><th>Status</th><th>Comments</th><th>Date Recorded</th></tr></thead><tbody></tbody></table></div></div></div><div><h1>Diagnostic Results</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>Diagnostic Results: Observations</caption><thead><tr><th>Code</th><th>Result</th><th>Unit</th><th>Interpretation</th><th>Reference Range</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table><table class=\\\"hapiPropertyTable\\\"><caption>Diagnostic Results: Diagnostic Reports</caption><thead><tr><th>Code</th><th>Date</th></tr></thead><tbody></tbody></table></div></div></div><div><h1>Vital Signs</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>Vital Signs</caption><thead><tr><th>Code</th><th>Result</th><th>Unit</th><th>Interpretation</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table></div></div></div><div><h1>Pregnancy Information</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>Pregnancy</caption><thead><tr><th>Code</th><th>Result</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table></div></div></div><div><h1>Social History</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>Social History</caption><thead><tr><th>Code</th><th>Result</th><th>Unit</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table></div></div></div><div><h1>History of Past Illness</h1><div></div></div><div><h1>Functional Status</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>Functional Status</caption><thead><tr><th>Assessment</th><th>Status</th><th>Finding</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table></div></div></div><div><h1>Plan of Care</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>Plan of Care</caption><thead><tr><th>Activity</th><th>Intent</th><th>Comments</th><th>Planned Start</th><th>Planned End</th></tr></thead><tbody></tbody></table></div></div></div><div><h1>Advance Directives</h1><div><div><table class=\\\"hapiPropertyTable\\\"><caption>Advance Directives</caption><thead><tr><th>Scope</th><th>Status</th><th>Action Controlled</th><th>Date</th></tr></thead><tbody></tbody></table></div></div></div></div>\"\n                    },\n                    \"status\": \"final\",\n                    \"type\": {\n                        \"coding\": [\n                            {\n                                \"system\": \"http://loinc.org\",\n                                \"code\": \"60591-5\",\n                                \"display\": \"Patient Summary Document\"\n                            }\n                        ]\n                    },\n                    \"subject\": {\n                        \"reference\": \"urn:uuid:ad69d9b2-4506-4549-9b0c-f16f7fc9d7fb\"\n                    },\n                    \"date\": \"2023-06-13T14:06:47.356+00:00\",\n                    \"author\": [\n                        {\n                            \"reference\": \"urn:uuid:a1f12ecb-4cfb-4f6a-9258-4b464bc4364a\"\n                        }\n                    ],\n                    \"title\": \"Patient Summary as of 06/13/2023\",\n                    \"confidentiality\": \"N\",\n                    \"section\": [\n                        {\n                            \"title\": \"Allergies and Intolerances\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"48765-2\",\n                                        \"display\": \"Allergies and Adverse Reactions\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>Allergies And Intolerances</caption><thead><tr><th>Allergen</th><th>Status</th><th>Category</th><th>Reaction</th><th>Severity</th><th>Comments</th><th>Onset</th></tr></thead><tbody><tr id=\\\"AllergyIntolerance-urn:uuid:0ebdc645-0240-4992-8901-8eb4755ebb5b\\\"><td> No information about allergies </td><td> active </td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>\"\n                            },\n                            \"entry\": [\n                                {\n                                    \"reference\": \"urn:uuid:0ebdc645-0240-4992-8901-8eb4755ebb5b\"\n                                }\n                            ]\n                        },\n                        {\n                            \"title\": \"Medication List\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"10160-0\",\n                                        \"display\": \"Medication List\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>Medication Summary: Medication Requests</caption><thead><tr><th>Medication</th><th>Status</th><th>Route</th><th>Sig</th><th>Comments</th><th>Authored Date</th></tr></thead><tbody></tbody></table><table class=\\\"hapiPropertyTable\\\"><caption>Medication Summary: Medication Statements</caption><thead><tr><th>Medication</th><th>Status</th><th>Route</th><th>Sig</th><th>Date</th></tr></thead><tbody><tr id=\\\"MedicationStatement-urn:uuid:448ba386-108f-44d4-ad61-8b2fe4254d32\\\"><td> No information about medications </td><td>Unknown</td><td></td><td></td><td></td></tr></tbody></table></div>\"\n                            },\n                            \"entry\": [\n                                {\n                                    \"reference\": \"urn:uuid:448ba386-108f-44d4-ad61-8b2fe4254d32\"\n                                }\n                            ]\n                        },\n                        {\n                            \"title\": \"Problem List\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"11450-4\",\n                                        \"display\": \"Problem List\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>Problem List</caption><thead><tr><th>Medical Problems</th><th>Status</th><th>Comments</th><th>Onset Date</th></tr></thead><tbody><tr id=\\\"Condition-urn:uuid:0b690005-9dd0-4749-b25c-33a038f5f2fd\\\"><td> Overweight (finding) </td><td> active </td><td></td><td> Mon Jan 01 00:00:00 GMT 2018 </td></tr></tbody></table></div>\"\n                            },\n                            \"entry\": [\n                                {\n                                    \"reference\": \"urn:uuid:0b690005-9dd0-4749-b25c-33a038f5f2fd\"\n                                }\n                            ]\n                        },\n                        {\n                            \"title\": \"History of Immunizations\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"11369-6\",\n                                        \"display\": \"History of Immunizations\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>Immunizations</caption><thead><tr><th>Immunization</th><th>Status</th><th>Dose Number</th><th>Manufacturer</th><th>Lot Number</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table></div>\"\n                            }\n                        },\n                        {\n                            \"title\": \"History of Procedures\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"47519-4\",\n                                        \"display\": \"History of Procedures\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>History Of Procedures</caption><thead><tr><th>Procedure</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table></div>\"\n                            }\n                        },\n                        {\n                            \"title\": \"Medical Devices\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"46240-8\",\n                                        \"display\": \"Medical Devices\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>Medical Devices</caption><thead><tr><th>Device</th><th>Status</th><th>Comments</th><th>Date Recorded</th></tr></thead><tbody></tbody></table></div>\"\n                            }\n                        },\n                        {\n                            \"title\": \"Diagnostic Results\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"30954-2\",\n                                        \"display\": \"Diagnostic Results\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>Diagnostic Results: Observations</caption><thead><tr><th>Code</th><th>Result</th><th>Unit</th><th>Interpretation</th><th>Reference Range</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table><table class=\\\"hapiPropertyTable\\\"><caption>Diagnostic Results: Diagnostic Reports</caption><thead><tr><th>Code</th><th>Date</th></tr></thead><tbody></tbody></table></div>\"\n                            }\n                        },\n                        {\n                            \"title\": \"Vital Signs\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"8716-3\",\n                                        \"display\": \"Vital Signs\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>Vital Signs</caption><thead><tr><th>Code</th><th>Result</th><th>Unit</th><th>Interpretation</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table></div>\"\n                            }\n                        },\n                        {\n                            \"title\": \"Pregnancy Information\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"10162-6\",\n                                        \"display\": \"Pregnancy Information\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>Pregnancy</caption><thead><tr><th>Code</th><th>Result</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table></div>\"\n                            }\n                        },\n                        {\n                            \"title\": \"Social History\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"29762-2\",\n                                        \"display\": \"Social History\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>Social History</caption><thead><tr><th>Code</th><th>Result</th><th>Unit</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table></div>\"\n                            }\n                        },\n                        {\n                            \"title\": \"History of Past Illness\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"11348-0\",\n                                        \"display\": \"History of Past Illness\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\"\n                            }\n                        },\n                        {\n                            \"title\": \"Functional Status\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"47420-5\",\n                                        \"display\": \"Functional Status\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>Functional Status</caption><thead><tr><th>Assessment</th><th>Status</th><th>Finding</th><th>Comments</th><th>Date</th></tr></thead><tbody></tbody></table></div>\"\n                            }\n                        },\n                        {\n                            \"title\": \"Plan of Care\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"18776-5\",\n                                        \"display\": \"Plan of Care\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>Plan of Care</caption><thead><tr><th>Activity</th><th>Intent</th><th>Comments</th><th>Planned Start</th><th>Planned End</th></tr></thead><tbody></tbody></table></div>\"\n                            }\n                        },\n                        {\n                            \"title\": \"Advance Directives\",\n                            \"code\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://loinc.org\",\n                                        \"code\": \"42349-0\",\n                                        \"display\": \"Advance Directives\"\n                                    }\n                                ]\n                            },\n                            \"text\": {\n                                \"status\": \"generated\",\n                                \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><table class=\\\"hapiPropertyTable\\\"><caption>Advance Directives</caption><thead><tr><th>Scope</th><th>Status</th><th>Action Controlled</th><th>Date</th></tr></thead><tbody></tbody></table></div>\"\n                            }\n                        }\n                    ]\n                }\n            },\n            {\n                \"fullUrl\": \"urn:uuid:ad69d9b2-4506-4549-9b0c-f16f7fc9d7fb\",\n                \"resource\": {\n                    \"resourceType\": \"Patient\",\n                    \"meta\": {\n                        \"versionId\": \"1\",\n                        \"lastUpdated\": \"2023-06-12T09:38:39.965+00:00\",\n                        \"source\": \"#f02e49bc-4a5c-98\"\n                    },\n                    \"text\": {\n                        \"status\": \"generated\",\n                        \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\">Age: 28 years. I live with my boyfriend. PhD Student Interests: I love reading and walking outdoors with my dog. I also love art and photography. Health Conditions: HIV (diagnosed with 25 years) Trigeminal neuralgia Depression Overweight</div>\"\n                    },\n                    \"extension\": [\n                        {\n                            \"url\": \"http://hl7.org/fhir/StructureDefinition/patient-citizenship\",\n                            \"extension\": [\n                                {\n                                    \"url\": \"code\",\n                                    \"valueCodeableConcept\": {\n                                        \"coding\": [\n                                            {\n                                                \"system\": \"urn:iso:std:iso:3166\",\n                                                \"code\": \"ES\",\n                                                \"display\": \"Spain\"\n                                            }\n                                        ]\n                                    }\n                                }\n                            ]\n                        }\n                    ],\n                    \"identifier\": [\n                        {\n                            \"system\": \"https://www.gravitatehealth.eu/sid/doc\",\n                            \"value\": \"alicia-1\"\n                        }\n                    ],\n                    \"active\": true,\n                    \"name\": [\n                        {\n                            \"family\": \"Gravitate\",\n                            \"given\": [\n                                \"Alicia\"\n                            ]\n                        }\n                    ],\n                    \"gender\": \"female\",\n                    \"birthDate\": \"1998-10-05\"\n                }\n            },\n            {\n                \"fullUrl\": \"urn:uuid:0ebdc645-0240-4992-8901-8eb4755ebb5b\",\n                \"resource\": {\n                    \"resourceType\": \"AllergyIntolerance\",\n                    \"extension\": [\n                        {\n                            \"url\": \"http://hl7.org/fhir/StructureDefinition/narrativeLink\",\n                            \"valueUri\": \"urn:uuid:4475a3cd-209a-4749-979d-bb4ddac43b08#AllergyIntolerance-urn:uuid:0ebdc645-0240-4992-8901-8eb4755ebb5b\"\n                        }\n                    ],\n                    \"clinicalStatus\": {\n                        \"coding\": [\n                            {\n                                \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n                                \"code\": \"active\"\n                            }\n                        ]\n                    },\n                    \"code\": {\n                        \"coding\": [\n                            {\n                                \"system\": \"http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips\",\n                                \"code\": \"no-allergy-info\",\n                                \"display\": \"No information about allergies\"\n                            }\n                        ]\n                    },\n                    \"patient\": {\n                        \"reference\": \"urn:uuid:ad69d9b2-4506-4549-9b0c-f16f7fc9d7fb\"\n                    }\n                }\n            },\n            {\n                \"fullUrl\": \"urn:uuid:448ba386-108f-44d4-ad61-8b2fe4254d32\",\n                \"resource\": {\n                    \"resourceType\": \"MedicationStatement\",\n                    \"extension\": [\n                        {\n                            \"url\": \"http://hl7.org/fhir/StructureDefinition/narrativeLink\",\n                            \"valueUri\": \"urn:uuid:4475a3cd-209a-4749-979d-bb4ddac43b08#MedicationStatement-urn:uuid:448ba386-108f-44d4-ad61-8b2fe4254d32\"\n                        }\n                    ],\n                    \"status\": \"unknown\",\n                    \"medicationCodeableConcept\": {\n                        \"coding\": [\n                            {\n                                \"system\": \"http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips\",\n                                \"code\": \"no-medication-info\",\n                                \"display\": \"No information about medications\"\n                            }\n                        ]\n                    },\n                    \"subject\": {\n                        \"reference\": \"urn:uuid:ad69d9b2-4506-4549-9b0c-f16f7fc9d7fb\"\n                    }\n                }\n            },\n            {\n                \"fullUrl\": \"urn:uuid:0b690005-9dd0-4749-b25c-33a038f5f2fd\",\n                \"resource\": {\n                    \"resourceType\": \"Condition\",\n                    \"meta\": {\n                        \"versionId\": \"1\",\n                        \"lastUpdated\": \"2023-06-12T09:38:54.802+00:00\",\n                        \"source\": \"#c4fa2cea-f22c-9e\",\n                        \"profile\": [\n                            \"http://hl7.org/fhir/uv/ips/StructureDefinition/Condition-uv-ips\"\n                        ]\n                    },\n                    \"extension\": [\n                        {\n                            \"url\": \"http://hl7.org/fhir/StructureDefinition/narrativeLink\",\n                            \"valueUri\": \"urn:uuid:4475a3cd-209a-4749-979d-bb4ddac43b08#Condition-urn:uuid:0b690005-9dd0-4749-b25c-33a038f5f2fd\"\n                        }\n                    ],\n                    \"clinicalStatus\": {\n                        \"coding\": [\n                            {\n                                \"system\": \"http://terminology.hl7.org/CodeSystem/condition-clinical\",\n                                \"code\": \"active\"\n                            }\n                        ]\n                    },\n                    \"code\": {\n                        \"coding\": [\n                            {\n                                \"system\": \"http://snomed.info/sct\",\n                                \"code\": \"238131007\",\n                                \"display\": \"Overweight (finding)\"\n                            }\n                        ],\n                        \"text\": \"Overweight (finding)\"\n                    },\n                    \"subject\": {\n                        \"reference\": \"urn:uuid:ad69d9b2-4506-4549-9b0c-f16f7fc9d7fb\",\n                        \"display\": \"Alicia Gravitate\"\n                    },\n                    \"onsetDateTime\": \"2018\",\n                    \"asserter\": {\n                        \"display\": \"Dr. Walter Waltz\"\n                    }\n                }\n            },\n            {\n                \"fullUrl\": \"urn:uuid:a1f12ecb-4cfb-4f6a-9258-4b464bc4364a\",\n                \"resource\": {\n                    \"resourceType\": \"Organization\",\n                    \"name\": \"eHealthLab - University of Cyprus\",\n                    \"address\": [\n                        {\n                            \"line\": [\n                                \"1 University Avenue\"\n                            ],\n                            \"city\": \"Nicosia\",\n                            \"postalCode\": \"2109\",\n                            \"country\": \"CY\"\n                        }\n                    ]\n                }\n            }\n        ]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{focusingTestPrefix}}{{focusEndpoint}}?preprocessors=preprocessing-service-manual&lenses=lens-selector-example_pregnancy&patientId=5ecb793d-e4e1-4aab-b734-36f6bad06b1e",
+							"host": [
+								"{{baseUrl}}{{focusingTestPrefix}}{{focusEndpoint}}"
+							],
+							"query": [
+								{
+									"key": "preprocessors",
+									"value": "preprocessing-service-manual"
+								},
+								{
+									"key": "lenses",
+									"value": "lens-selector-example_pregnancy"
+								},
+								{
+									"key": "patientId",
+									"value": "5ecb793d-e4e1-4aab-b734-36f6bad06b1e"
+								},
+								{
+									"key": "epiId",
+									"value": "bundlepackageleaflet-2d49ae46735143c1323423b7aea24165",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Preprocesses and focuses an ePI based on an IPS. Desired response \"Content-Type\" (JSON or HTML) must be sent in the \"Accept\" header."
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/focusing/focus/:epiId?preprocessors=<string>&lenses=<string>&ipsId=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"focusing",
+										"focus",
+										":epiId"
+									],
+									"query": [
+										{
+											"key": "preprocessors",
+											"value": "<string>",
+											"description": "List of preprocessors to be executed on the ePI. If parameter is absent, all preprocessors will be executed."
+										},
+										{
+											"key": "lenses",
+											"value": "<string>",
+											"description": "(Required) List of lenses to be applied."
+										},
+										{
+											"key": "ipsId",
+											"value": "<string>",
+											"description": "(Required) IPS id."
+										}
+									],
+									"variable": [
+										{
+											"key": "epiId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"epiKey\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/focusing/focus/:epiId?preprocessors=<string>&lenses=<string>&ipsId=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"focusing",
+										"focus",
+										":epiId"
+									],
+									"query": [
+										{
+											"key": "preprocessors",
+											"value": "<string>",
+											"description": "List of preprocessors to be executed on the ePI. If parameter is absent, all preprocessors will be executed."
+										},
+										{
+											"key": "lenses",
+											"value": "<string>",
+											"description": "(Required) List of lenses to be applied."
+										},
+										{
+											"key": "ipsId",
+											"value": "<string>",
+											"description": "(Required) IPS id."
+										}
+									],
+									"variable": [
+										{
+											"key": "epiId"
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"messsage\": \"Given data is invalid\",\n  \"reason\": \"Reason\"\n}"
+						},
+						{
+							"name": "Preprocesses and focuses an ePI based on an IPS. Desired response \"Content-Type\" (JSON or HTML) must be sent in the \"Accept\" header.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}/:epiId?preprocessors=<string>&preprocessors=<string>&lenses=<string>&lenses=<string>&ipsId=<string>",
+									"host": [
+										"{{baseUrl}}{{focusingPrefix}}{{focusEndpoint}}"
+									],
+									"path": [
+										":epiId"
+									],
+									"query": [
+										{
+											"key": "preprocessors",
+											"value": "<string>"
+										},
+										{
+											"key": "preprocessors",
+											"value": "<string>"
+										},
+										{
+											"key": "lenses",
+											"value": "<string>"
+										},
+										{
+											"key": "lenses",
+											"value": "<string>"
+										},
+										{
+											"key": "ipsId",
+											"value": "<string>"
+										}
+									],
+									"variable": [
+										{
+											"key": "epiId",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'none'"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "151"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Apr 2023 12:53:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <title>Error</title>\n    </head>\n    <body>\n        <pre>Cannot GET /focus/:epiId</pre>\n    </body>\n</html>"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "/terminologies",
+			"item": [
+				{
+					"name": "SNOMED",
+					"item": [
+						{
+							"name": "/diabetes/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{terminologiesPrefix}}/snomed/diabetes/all",
+									"host": [
+										"{{baseUrl}}{{terminologiesPrefix}}"
+									],
+									"path": [
+										"snomed",
+										"diabetes",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/medication-interaction/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{terminologiesPrefix}}/snomed/medication-interaction/all",
+									"host": [
+										"{{baseUrl}}{{terminologiesPrefix}}"
+									],
+									"path": [
+										"snomed",
+										"medication-interaction",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/vih/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{terminologiesPrefix}}/snomed/vih/all",
+									"host": [
+										"{{baseUrl}}{{terminologiesPrefix}}"
+									],
+									"path": [
+										"snomed",
+										"vih",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/intollerances/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{terminologiesPrefix}}/snomed/allergies/all",
+									"host": [
+										"{{baseUrl}}{{terminologiesPrefix}}"
+									],
+									"path": [
+										"snomed",
+										"allergies",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/allergies/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{terminologiesPrefix}}/snomed/allergies/all",
+									"host": [
+										"{{baseUrl}}{{terminologiesPrefix}}"
+									],
+									"path": [
+										"snomed",
+										"allergies",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/pregnancy/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{terminologiesPrefix}}/snomed/pregnancy/all",
+									"host": [
+										"{{baseUrl}}{{terminologiesPrefix}}"
+									],
+									"path": [
+										"snomed",
+										"pregnancy",
+										"all"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ICPC-2",
+					"item": [
+						{
+							"name": "/problem-list/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{terminologiesPrefix}}/icpc2/problem-list/all",
+									"host": [
+										"{{baseUrl}}{{terminologiesPrefix}}"
+									],
+									"path": [
+										"icpc2",
+										"problem-list",
+										"all"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "epi-search/search",
+			"item": [
+				{
+					"name": "search api by medicine name",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "medicine",
+									"value": "cava",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/epi-search/search",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"epi-search",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwtToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"function decodeJwt(x) {",
+					"    let wordArray = CryptoJS.enc.Base64.parse(x);",
+					"    let str = CryptoJS.enc.Utf8.stringify(wordArray);",
+					"    return JSON.parse(str);",
+					"}",
+					"",
+					"let KCAdminRoles = [\"Admin\"]",
+					"",
+					"var accounts = {",
+					"    Normal: {",
+					"        username: pm.collectionVariables.get(\"userEmail\"),",
+					"        password: pm.collectionVariables.get(\"userPassword\"),",
+					"    },",
+					"    //Admin: {",
+					"    //    username: pm.collectionVariables.get(\"ADMIN_USER\"),",
+					"    //    password: pm.collectionVariables.get(\"ADMIN_PASSWORD\"),",
+					"    //},",
+					"}",
+					"",
+					"",
+					"Object.keys(accounts).forEach(async roleName => {",
+					"    var baseUrl = pm.environment.get(\"baseUrl\");",
+					"    var realm = pm.collectionVariables.get(\"realm\");",
+					"    var grantType = pm.collectionVariables.get(\"grantType\");",
+					"    var clientId = pm.collectionVariables.get(\"clientId\")",
+					"    var clientSecret = \"\"; // the secret you copied earlier",
+					"",
+					"    let username = accounts[roleName][\"username\"]",
+					"    let password = accounts[roleName][\"password\"]",
+					"",
+					"    let currentAccessToken = 'jwtToken'",
+					"    let accessTokenExpiry = 'jwtExpiryDate'",
+					"",
+					"",
+					"    // creating the request URL",
+					"    var tokenUrl = `${baseUrl}/auth/realms/${realm}/protocol/openid-connect/token`;",
+					"    // creating the body of the request",
+					"    var data = `grant_type=${grantType}&client_id=${clientId}&username=${username}&password=${password}&client_secret=${clientSecret}`;",
+					"    var getToken = true;",
+					"    if (!pm.environment.get(\"jwtToken\") ||",
+					"        !pm.environment.get(\"jwtExpiryDate\")) {",
+					"        console.log(`Token NOT OK for test user: ${roleName}. Missing token or expiry date.`)",
+					"    } else if (pm.environment.get(jwtExpiryDate) <= (new Date()).getTime()) {",
+					"        console.log(`Token NOT OK for test user: ${roleName}. Expired.`)",
+					"    } else {",
+					"        getToken = false;",
+					"        console.log(`Token OK for test user: ${roleName}.`);",
+					"    }",
+					"",
+					"    if (getToken === true) {",
+					"        console.log(\"Getting token...\")",
+					"        // request to Keycloak",
+					"        // read more about this here: https://www.keycloak.org/docs/latest/authorization_services/#_service_overview",
+					"        await pm.sendRequest({",
+					"            url: tokenUrl,",
+					"            method: 'POST',",
+					"            header: { 'Content-Type': 'application/x-www-form-urlencoded' },",
+					"            body: {",
+					"                mode: 'raw',",
+					"                raw: data",
+					"            }",
+					"        }, function (err, res) {",
+					"            //console.log(err ? err : res.json());",
+					"            if (err === null) {",
+					"                console.log('Saving the token and expiry date for role: ' + roleName)",
+					"                var responseJson = res.json();",
+					"                let jwt = responseJson.access_token",
+					"                pm.environment.set(\"jwtToken\", jwt)",
+					"                pm.environment.set(\"jwtRefreshToken\", responseJson.refresh_token)",
+					"",
+					"                let [header, payload, signature] = jwt.split('.');",
+					"                let userId = decodeJwt(payload).sub;",
+					"                pm.environment.set(\"userId\", userId)",
+					"",
+					"                var expiryDate = new Date();",
+					"                expiryDate.setSeconds(expiryDate.getSeconds() + responseJson.expires_in);",
+					"                pm.environment.set(accessTokenExpiry, expiryDate.getTime());",
+					"            }",
+					"        });",
+					"    }",
+					"})",
+					"",
+					"",
+					"",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "userEmail",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userPassword",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "realm",
+			"value": "GravitateHealth",
+			"type": "string"
+		},
+		{
+			"key": "grantType",
+			"value": "password",
+			"type": "string"
+		},
+		{
+			"key": "clientId",
+			"value": "GravitateHealth",
+			"type": "string"
+		},
+		{
+			"key": "usersPrefix",
+			"value": "/users/api",
+			"type": "string"
+		},
+		{
+			"key": "usersEndpoint",
+			"value": "/user",
+			"type": "string"
+		},
+		{
+			"key": "resetPasswordEndpoint",
+			"value": "/reset-password",
+			"type": "string"
+		},
+		{
+			"key": "sendVerificationEmailEndpoint",
+			"value": "/verification-email",
+			"type": "string"
+		},
+		{
+			"key": "focusingPrefix",
+			"value": "/focusing",
+			"type": "string"
+		},
+		{
+			"key": "preprocessingEndpoint",
+			"value": "/preprocessing",
+			"type": "string"
+		},
+		{
+			"key": "lensesEndpoint",
+			"value": "/lenses",
+			"type": "string"
+		},
+		{
+			"key": "focusEndpoint",
+			"value": "/focus",
+			"type": "string"
+		},
+		{
+			"key": "terminologiesPrefix",
+			"value": "/terminologies",
+			"type": "string"
+		}
+	]
+}
