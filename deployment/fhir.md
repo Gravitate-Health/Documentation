@@ -91,7 +91,7 @@ If this is happening, edit manually the deployment `kubectl edit deployment` and
 If the [Istio service mesh](https://github.com/Gravitate-Health/istio) has been deployed you can expose the service by running the following command:
 
 ```bash
-kubectl apply -f kubernetes/fhir_ips_vs.yaml
+kubectl apply -f kubernetes/001_fhir-ips-vs.yml
 ```
 
 If the pods are ready you can access the service by other services in the same namespace by using the name of its Kubernetes service and the port. Moreover, if the Kubernetes cluster has a DNS manager other services can access services in other namespaces using the following URL: ```http://<service-name>.<namespace>.svc.cluster.local```. To learn more about the types of services and its uses in Kubernetes, here is the [official documentation](https://kubernetes.io/docs/concepts/services-networking/). Alternatively if the [Istio service mesh](https://github.com/Gravitate-Health/istio) has been deployed, the service will be proxied to the outside of the cluster at `https://<DNS>/ips/api/fhir/`.
