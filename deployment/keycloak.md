@@ -40,7 +40,7 @@ helm repo update
 helm install keycloak-helm -f YAMLs/values.yaml bitnami/postgresql
 ```
 
-ANd check everything is installed correctly:
+And check everything is installed correctly:
 
 ```bash
 kubectl get secrets
