@@ -40,7 +40,7 @@ helm repo update
 helm install keycloak-helm -f YAMLs/values.yaml bitnami/postgresql
 ```
 
-And check everything is installed correctly:
+ANd check everything is installed correctly:
 
 ```bash
 kubectl get secrets
@@ -70,12 +70,24 @@ keycloak-helm-postgresql-hl             ClusterIP   None            <none>      
 
 ## Keycloak k8s deployment
 
-The Kubernetes deployment uses the public Keycloak image hosted at [quay.io](https://quay.io/repository/keycloak/keycloak). And the public Postgresql image hosted at [hub.docker](https://hub.docker.com/_/postgres), which will be used as persistence. The files for the deployment can be found at the [YAMLs](YAMLs/) directory
+The Kubernetes deployment uses the public Keycloak image hosted at [quay.io](https://quay.io/repository/keycloak/keycloak). And the public Postgresql image hosted at [hub.docker](https://hub.docker.com/_/postgres), which will be used as persistence. The files for the deployment can be found at the [YAMLs](https://github.com/Gravitate-Health/keycloak/tree/main/YAMLs) directory
 
 Both the deployment files for the Postgres DB and the Keycloak contain several environment variables which can be modified. These environmnet variables are the ones we used but the configuration allows for much more. Furthermore, the file [001_keycloak-secrets.yaml](YAMLs/001_keycloak-secrets.yaml) contains the values for the passwords to be used in the deployment files, you must generate your own and convert it into base64 and replace it. For example:
 
 ```bash
 echo -n Mypassword1234! | base64 -w 0     # Make sure there is no trailing "\n", it will fail
+```
+
+And paste the base64 encoded password to the secret yaml file:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keycloak-secret
+data:
+  adminpass: BASE64_ENCODED_PASSWORD=
+
 ```
 
 - Keycloak environment variables
@@ -93,16 +105,6 @@ echo -n Mypassword1234! | base64 -w 0     # Make sure there is no trailing "\n",
 | KC_DB_SCHEMA            | Schema of the database                                                                                        | public                                       |
 | KC_LOG_LEVEL            | Log level                                                                                                     | debug                                        |
 
-The next step is to apply the Kubernetes files in the cluster, the services will be deployed in the development namespace. In case the namespace has not been created before you can create it with the following commands, or change the name in `metadata.namespace`:
-
-First we deploy the database:
-
-```bash
-kubectl create namespace <namespace>                         # Only if namespace not created and/or the current context
-kubectl config set-context --current --namespace=<namespace> # Only if namespace not created and/or the current context
-
-kubectl apply -f YAMLs/001_keycloak-secrets.yaml
-```
 
 Once the database is ready the Keycloak can be deployed:
 
@@ -121,7 +123,7 @@ NAMESPACE            NAME                                         READY   STATUS
 <namespace>          keycloak-54d87cb874-fgfqt                    1/1     Running   0               12d
 ```
 
-If the pod is ready you can access the service by other services in the same namespace by using the name of its Kubernetes service and the port (especified in [005_keycloak-service.yaml](YAMLs/005_keycloak-service.yaml)). You can also obtain both by running the following commands:
+If the pod is ready you can access the service by other services in the same namespace by using the name of its Kubernetes service and the port (especified in [005_keycloak-service.yaml](https://github.com/Gravitate-Health/keycloak/tree/main/YAMLs)). You can also obtain both by running the following commands:
 
 ```bash
 kubectl get svc | grep "keycloak"

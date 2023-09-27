@@ -17,7 +17,7 @@ cd istio-1.16.1/
 export PATH=$PWD/bin:$PATH
 ```
 
-2. Install Istio operator. Keep in mind that depending on your platform you might need to prepare it before the Istio installation (https://istio.io/latest/docs/setup/platform-setup/). It is installed with [istio-operator.yml](./fosps-enviroment/001_istio-operator.yaml)
+1. Install Istio operator. Keep in mind that depending on your platform you might need to prepare it before the Istio installation (https://istio.io/latest/docs/setup/platform-setup/). It is installed with [istio-operator.yml](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/001_istio-operator.yaml)
 
 ```bash
 istioctl apply -f ./fosps-enviroment/001_istio-operator.yaml
@@ -31,7 +31,7 @@ istioctl install --set profile=default -y --set components.egressGateways[0].nam
 kubectl label namespace default istio-injection=enabled
 ```
 
-3. Set up the gateway. We have two options, depending on wheter we have a DNS name or not. For only IP access use [this file](./fosps-enviroment/002_gh-gateway-ip.yaml). For this example we will use the one [with domain name and certificate](./fosps-enviroment/002_gh-gateway.yaml):
+1. Set up the gateway. We have two options, depending on wheter we have a DNS name or not. For only IP access use [this file](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/002_gh-gateway-ip.yaml). For this example we will use the one [with domain name and certificate](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/002_gh-gateway.yaml):
 
 ```bash
 kubectl apply -f ./fosps-enviroment/002_gh-gateway.yaml
@@ -72,12 +72,12 @@ Install Istio CertManager
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
 ```
 
-Set up the [cluster issuer](./fosps-enviroment/003_cluster-issuer.yaml) (currently using http01 challenge)
+Set up the [cluster issuer](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/003_cluster-issuer.yaml) (currently using http01 challenge)
 ```bash
 istioctl apply -f ./fosps-enviroment/003_cluster-issuer.yaml
 ```
 
-Instanciate the [certificate](./fosps-enviroment/004_letsencrypt-cert.yaml)
+Instanciate the [certificate](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/004_letsencrypt-cert.yaml)
 ```bash
 istioctl apply -f ./fosps-enviroment/004_letsencrypt-cert.yaml
 ```

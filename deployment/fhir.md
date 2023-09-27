@@ -2,7 +2,7 @@
 
 This documentation refers to FHIR IPS server. The same procedure must be done to deploy FHIR ePI server, but changing the values.
 
-Following the instructions in the [Helm Chart](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/tree/master/charts/hapi-fhir-jpaserver) documentation porceed with the installation. The [values.yaml](gh-values.yaml) file has been modified for the Gravitate Health platform, you can find the full list of variables in the original repository, below is a list of the changes made:
+Following the instructions in the [Helm Chart](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/tree/master/charts/hapi-fhir-jpaserver) documentation porceed with the installation. The [values.yaml](https://github.com/Gravitate-Health/hapi-fhir-jpaserver-starter-ips/blob/master/charts/hapi-fhir-jpaserver/values.yaml) file has been modified for the Gravitate Health platform, you can find the full list of variables in the original repository, below is a list of the changes made:
 
 | Variable                       | value       |
 |--------------------------------|-------------|
