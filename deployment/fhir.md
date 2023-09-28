@@ -1,8 +1,8 @@
 # FHIR deployment
 
-## PostgreSQL Helm Deployment
-
 This documentation refers to FHIR IPS server. The same procedure must be done to deploy FHIR ePI server, but changing the values.
+
+## PostgreSQL Helm Deployment
 
 First of all we will need to deply the database that our FHIR IPS Server will use. We will use [Bitnami PostgreSQL](https://github.com/bitnami/charts/tree/main/bitnami/postgresql/) Helm chart to deploy the database. This will be done by creating a PVC and then deploying the Helm chart. We have an example of PVC in [kubernetes/002_postgres-pvc.yaml](https://github.com/Gravitate-Health/hapi-fhir-jpaserver-starter-ips/blob/master/kubernetes/002_postgres-pvc.yaml). Without this, the database won't be persistent and will be deleted when the pod is deleted.
 
