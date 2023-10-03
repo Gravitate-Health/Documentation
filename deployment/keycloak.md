@@ -134,3 +134,11 @@ keycloak                   ClusterIP   10.152.183.207   <none>        8080/TCP  
 ```
 
 The type of the service is _ClusterIP_ which means that the service can only be accessed from inside the cluster. Moreover, if the Kubernetes cluster has a DNS manager other services can access services in other namespaces using the following URL: ```http://<service-name>.<namespace>.svc.cluster.local```. To learn more about the types of services and its uses in Kubernetes, here is the [official documentation](https://kubernetes.io/docs/concepts/services-networking/). Alternatively if the [Gateway](https://github.com/Gravitate-Health/Gateway) has been deployed, the service will be proxied to the outside of the cluster at `https://<DNS>/`.
+
+## Apply istio's VirtualService
+
+In order to be accesible from the internet, the VirtualService must be configured for Istio. Apply the [following yaml file](https://github.com/Gravitate-Health/keycloak/blob/main/YAMLs/007_keycloak-vs.yaml) in the [YAMLs folder for keycloak](https://github.com/Gravitate-Health/keycloak/tree/main/YAMLs)
+
+```bash
+kubectl apply -f 007_keycloak-vs.yaml
+```
