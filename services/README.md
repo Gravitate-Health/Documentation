@@ -145,7 +145,12 @@ Lenses consists in a javascript module which must export an object with two prop
 
 ## Content Trust
 
-[Work in Progress]
+Content trust provides mechanisms to register FHIR based resources, such as IPS and ePI, using blockchain to later validate data authenticity, origin and registration time. Blockchain is not used to store resource itself on it but instead use resource fingerprint, a.k.a. hash digest, that is registred on blockchain to obtain an immutable proof. Service has APIs that are uing JSON data format.
+Content trust takes FHIR resource in JSON format (canonicalized) and signs it using blockchain. Obtained proof is then placed into signature attribute within resource so that proof and registered data would remain together. 
+Similarly for validation, content trust takes already signed resoure as an input and performs necessary validation to determine data immutability, registration time and authenticity. Up on validation the service responds with validation results and any additional metadata about signature, e.g. signing time, document hash.
+Similarly to whole resource signing and validation the Content trust can be used to sign and validate the provenance attribute within the resource itself as well.
+Service also provides means to sign arbitrary SHA-256 hash digest for cases when IPS or otherwise more personalised data shall be signed and thus data itself shall not be moved between services. For validation the hash digest of the data alongside its associated signature shall be provided for the Content trust to perform the validation. 
+Content trust [repo link](https://github.com/Gravitate-Health/content-trust/) for readme and releases.
 
 ## Other:
 
