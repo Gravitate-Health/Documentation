@@ -74,10 +74,10 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 
 Set up the [cluster issuer](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/003_cluster-issuer.yaml) (currently using http01 challenge)
 ```bash
-istioctl apply -f ./fosps-enviroment/003_cluster-issuer.yaml
+kubectl apply -f ./fosps-enviroment/003_cluster-issuer.yaml
 ```
 
 Instanciate the [certificate](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/004_letsencrypt-cert.yaml)
 ```bash
-istioctl apply -f ./fosps-enviroment/004_letsencrypt-cert.yaml
+kubectl apply -f ./fosps-enviroment/004_letsencrypt-cert.yaml
 ```
