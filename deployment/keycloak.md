@@ -134,3 +134,11 @@ keycloak                   ClusterIP   10.152.183.207   <none>        8080/TCP  
 ```
 
 The type of the service is _ClusterIP_ which means that the service can only be accessed from inside the cluster. Moreover, if the Kubernetes cluster has a DNS manager other services can access services in other namespaces using the following URL: ```http://<service-name>.<namespace>.svc.cluster.local```. To learn more about the types of services and its uses in Kubernetes, here is the [official documentation](https://kubernetes.io/docs/concepts/services-networking/). Alternatively if the [Gateway](https://github.com/Gravitate-Health/Gateway) has been deployed, the service will be proxied to the outside of the cluster at `https://<DNS>/`.
+
+
+## Create service user
+
+Create a user for the keycloak-registration service to be able to manage users:
+
+- Create a keycloak user with the email and password specified in the secrets file of the keycloak repository.
+- Edit user's roles going to Role Mappings --> Client Roles = `realm-management` --> Assign the role `manage-users`

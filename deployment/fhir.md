@@ -10,23 +10,11 @@ First of all we will need to deply the database that our FHIR IPS Server will us
 kubectl apply -f kubernetes/002_postgres-pvc.yml
 ```
 
-After this, we need to create a secret with the password for the database. We have an example in [kubernetes/003_postgres-secret.yaml](https://github.com/Gravitate-Health/hapi-fhir-jpaserver-starter-ips/blob/master/kubernetes/003_postgres-secret.yaml). You should change the password in this file, and encode the password in Base64. This password will be used in the Helm chart. Generate the password with the following command:
-
-```bash
-echo "YOUR_PASSWORD" | base64 -w 0
-```
-
-Then, apply the secret with the following command:
-
-```bash
-kubectl apply -f kubernetes/003_postgres-secret.yml
-```
-
 Finally, we can deploy the Helm chart. We will use the Bitnami's Chart and a values file with the configuration. We have an example in [kubernetes/values.yaml](https://github.com/Gravitate-Health/hapi-fhir-jpaserver-starter-ips/blob/master/kubernetes/values.yaml). Edit the values file to change the password and the PVC name. Then, deploy the Helm chart with the following command:
 
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install --render-subchart-notes hapi-fhir-jpaserver-ips bitnami/postgresql --values=kubernetes/values.yaml
+helm install --render-subchart-notes postgresql-fhir-ips bitnami/postgresql --values=kubernetes/values.yaml
 ```
 
 ## HAPI FHIR Helm Deployment
@@ -49,7 +37,7 @@ To install run:
 
 ```bash
 helm repo add hapifhir https://hapifhir.github.io/hapi-fhir-jpaserver-starter/
-helm install --render-subchart-notes hapi-fhir-jpaserver-ips hapifhir/hapi-fhir-jpaserver --values=charts/hapi-fhir-jpaserver/values.yaml
+helm install --render-subchart-notes fhir-ips hapifhir/hapi-fhir-jpaserver --values=charts/hapi-fhir-jpaserver/values.yaml
 ```
 The response should look like the following:
 
