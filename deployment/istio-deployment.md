@@ -9,21 +9,18 @@ Steps:
 ```bash
 curl -L https://istio.io/downloadIstio | sh -
 
-# or for a specific version (this README was written using 1.16.1)
-curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.16.1 TARGET_ARCH=x86_64 sh - 
+# or for a specific version (this README was written using 1.20.2)
+curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.20.2 TARGET_ARCH=x86_64 sh - 
 
 # Add Istio to your path so it will be easier to use.
-cd istio-1.16.1/
+cd istio-1.20.2/
 export PATH=$PWD/bin:$PATH
 ```
 
-1. Install Istio operator. Keep in mind that depending on your platform you might need to prepare it before the Istio installation (https://istio.io/latest/docs/setup/platform-setup/). It is installed with [istio-operator.yml](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/001_istio-operator.yaml)
+1. Install Istio operator
 
 ```bash
-istioctl apply -f ./fosps-enviroment/001_istio-operator.yaml
-
-# Alternatively it can be written directly in the comman
-istioctl install --set profile=default -y --set components.egressGateways[0].name=istio-egressgateway --set components.egressGateways[0].enabled=true --set meshConfig.accessLogFile=/dev/stdout    # Use 'default' profile for production environments 
+istioctl install --set profile=demo -y
 ```
 
 2. Prepare the `default` namespace for injection
@@ -74,10 +71,10 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 
 Set up the [cluster issuer](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/003_cluster-issuer.yaml) (currently using http01 challenge)
 ```bash
-istioctl apply -f ./fosps-enviroment/003_cluster-issuer.yaml
+kubectl apply -f ./fosps-enviroment/003_cluster-issuer.yaml
 ```
 
 Instanciate the [certificate](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/004_letsencrypt-cert.yaml)
 ```bash
-istioctl apply -f ./fosps-enviroment/004_letsencrypt-cert.yaml
+kubectl apply -f ./fosps-enviroment/004_letsencrypt-cert.yaml
 ```

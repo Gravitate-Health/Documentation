@@ -142,3 +142,11 @@ Create a user for the keycloak-registration service to be able to manage users:
 
 - Create a keycloak user with the email and password specified in the secrets file of the keycloak repository.
 - Edit user's roles going to Role Mappings --> Client Roles = `realm-management` --> Assign the role `manage-users`
+
+## Apply istio's VirtualService
+
+In order to be accesible from the internet, the VirtualService must be configured for Istio. Apply the [following yaml file](https://github.com/Gravitate-Health/keycloak/blob/main/YAMLs/007_keycloak-vs.yaml) in the [YAMLs folder for keycloak](https://github.com/Gravitate-Health/keycloak/tree/main/YAMLs)
+
+```bash
+kubectl apply -f 007_keycloak-vs.yaml
+```
