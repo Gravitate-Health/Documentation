@@ -135,6 +135,13 @@ keycloak                   ClusterIP   10.152.183.207   <none>        8080/TCP  
 
 The type of the service is _ClusterIP_ which means that the service can only be accessed from inside the cluster. Moreover, if the Kubernetes cluster has a DNS manager other services can access services in other namespaces using the following URL: ```http://<service-name>.<namespace>.svc.cluster.local```. To learn more about the types of services and its uses in Kubernetes, here is the [official documentation](https://kubernetes.io/docs/concepts/services-networking/). Alternatively if the [Gateway](https://github.com/Gravitate-Health/Gateway) has been deployed, the service will be proxied to the outside of the cluster at `https://<DNS>/`.
 
+## Apply istio's VirtualService
+
+In order to be accesible from the internet, the VirtualService must be configured for Istio. Apply the [following yaml file](https://github.com/Gravitate-Health/keycloak/blob/main/YAMLs/007_keycloak-vs.yaml) in the [YAMLs folder for keycloak](https://github.com/Gravitate-Health/keycloak/tree/main/YAMLs)
+
+```bash
+kubectl apply -f 007_keycloak-vs.yaml
+```
 
 ## Create service user
 
@@ -143,10 +150,11 @@ Create a user for the keycloak-registration service to be able to manage users:
 - Create a keycloak user with the email and password specified in the secrets file of the keycloak repository.
 - Edit user's roles going to Role Mappings --> Client Roles = `realm-management` --> Assign the role `manage-users`
 
-## Apply istio's VirtualService
+## Email settings
 
-In order to be accesible from the internet, the VirtualService must be configured for Istio. Apply the [following yaml file](https://github.com/Gravitate-Health/keycloak/blob/main/YAMLs/007_keycloak-vs.yaml) in the [YAMLs folder for keycloak](https://github.com/Gravitate-Health/keycloak/tree/main/YAMLs)
-
-```bash
-kubectl apply -f 007_keycloak-vs.yaml
-```
+If you need Keycloak to send emails (Email verification, password recovery, etc.), you need to configure it.
+- 1. The "admin" account of the "master" realm needs to have an email configured.
+- 2. Go to the realm settings where FOSPS users are located, let's assume 'GravitatateHealth' realm.
+- 3. Go to the 'email' tab.
+- 4. Set the email server configuration.
+- 5. Use the 'Test connection' button to try the configuration.
