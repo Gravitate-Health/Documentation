@@ -8,3 +8,6 @@ This documentation is splitted into different documents:
 - [Postman collections](./postman/README.md)
 - TODO: Links to other specific documentations
 
+## FOSPS Development Manual
+
+You can find the FOSPS Development manual at [FOSPS Development manual](./development/development.md)
