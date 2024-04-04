@@ -25,6 +25,8 @@ Github worflows for Gravitate-Health are published and shared by all repositorie
 - Security scan with Trivy, scanning vulnerabilities in Docker images and dependencies, detecting secrets leaks and misconfigurations.
 - Automatic deployment to the Development environment.
 
+To develop/test workflow, it is encouraged to use [act](https://nektosact.com/introduction.html) to run and test worflows locally.
+
 ## Builds
 
 All developed components are built as Docker images, as FOSPS is deployed to a Kubernetes cluster.
