@@ -19,7 +19,7 @@ helm install --render-subchart-notes postgresql-fhir-ips bitnami/postgresql --va
 
 ## HAPI FHIR Helm Deployment
 
-Following the instructions in the [Helm Chart](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/tree/master/charts/hapi-fhir-jpaserver) documentation porceed with the installation. The [values.yaml](https://github.com/Gravitate-Health/hapi-fhir-jpaserver-starter-ips/blob/master/charts/hapi-fhir-jpaserver/values.yaml) file has been modified for the Gravitate Health platform, you can find the full list of variables in the original repository, below is a list of the changes made:
+Following the instructions in the [Helm Chart](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/tree/master/charts/hapi-fhir-jpaserver) documentation and proceed with the installation. The [values.yaml](https://github.com/Gravitate-Health/hapi-fhir-jpaserver-starter-ips/blob/master/charts/hapi-fhir-jpaserver/values.yaml) file has been modified for the Gravitate Health platform, you can find the full list of variables in the original repository, below is a list of the changes made:
 
 | Variable                       | value       |
 |--------------------------------|-------------|
@@ -73,13 +73,13 @@ service/hapi-fhir-jpaserver-ips-postgresql      ClusterIP      10.233.38.60     
 service/hapi-fhir-jpaserver-ips-postgresql-hl   ClusterIP              None            <none>                 5432/TCP             23d
 ```
 
-NOTE: Sometimes, the deployment builds incorrect liveness, readiness and startup endpoints, so the k8s cluster will always receive 404 from these endpoints, and service will never be ready. You can check this is happening if the pods are periodically restarting, or by running `kubectl describe pod POD_NAME`, wich will report a 404 status on liveness endpoint.
+NOTE: Sometimes, the deployment builds incorrect liveness, readiness and startup endpoints, so the k8s cluster will always receive 404 from these endpoints, and service will never be ready. You can check this is happening if the pods are periodically restarting, or by running `kubectl describe pod POD_NAME`, which will report a 404 status on liveness endpoint.
 
-If this is happening, edit manually the deployment `kubectl edit deployment` and delete the livenes, readiness and startup probes. 
+If this is happening, edit manually the deployment `kubectl edit deployment` and delete the liveness, readiness and startup probes. 
 
 ### Istio VirtualService deployment
 
-If the [Istio service mesh](https://github.com/Gravitate-Health/istio) has been deployed you can expose the service by running the following command:
+If the [Istio service mesh](https://github.com/Gravitate-Health/istio) has been deployed, you can expose the service by running the following command:
 
 ```bash
 kubectl apply -f kubernetes/001_fhir-ips-vs.yml

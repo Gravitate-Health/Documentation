@@ -52,11 +52,6 @@ Currently there are two separate instances for FHIR: ePI and IPS server:
 Refer to the [FHIR Readme](./fhir.md) to deploy and configure FHIR servers.
 
 
-### Deploy FOSPS services
----
-
-Work in progress.
-
 ### Deploy APIs & other FOSPS services
 ---
 

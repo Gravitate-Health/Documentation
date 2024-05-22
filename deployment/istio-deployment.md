@@ -17,18 +17,18 @@ cd istio-1.20.2/
 export PATH=$PWD/bin:$PATH
 ```
 
-1. Install Istio operator
+2. Install Istio operator
 
 ```bash
 istioctl install --set profile=demo -y
 ```
 
-2. Prepare the `default` namespace for injection
+3. Prepare the `default` namespace for injection
 ```bash
 kubectl label namespace default istio-injection=enabled
 ```
 
-1. Set up the gateway. We have two options, depending on wheter we have a DNS name or not. For only IP access use [this file](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/002_gh-gateway-ip.yaml). For this example we will use the one [with domain name and certificate](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/002_gh-gateway.yaml):
+4. Set up the gateway. We have two options, depending on wheter we have a DNS name or not. For only IP access use [this file](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/002_gh-gateway-ip.yaml). For this example we will use the one [with domain name and certificate](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/002_gh-gateway.yaml):
 
 ```bash
 kubectl apply -f ./fosps-enviroment/002_gh-gateway.yaml
@@ -61,7 +61,7 @@ replicaset.apps/istio-ingressgateway-f56888458   1         1         1       3m3
 replicaset.apps/istiod-64848b6c78                1         1         1       3m30s
 ```
 
-4. Set up for Let's Encrypt certificate (only if the gateway with domain name was applied, as Let's Encrypt does not issue certificate for IP addresses). First we have to set the ClusterIssuer resource, and then the certificate, so the clusterIssuer starts de challenge for Let's Encrypt.
+5. Set up for Let's Encrypt certificate (only if the gateway with domain name was applied, as Let's Encrypt does not issue certificate for IP addresses). First we have to set the ClusterIssuer resource, and then the certificate, so the clusterIssuer starts de challenge for Let's Encrypt.
 
 Install Istio CertManager
 
