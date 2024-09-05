@@ -10,7 +10,7 @@ First of all we will need to deply the database that our FHIR IPS Server will us
 kubectl apply -f kubernetes/002_postgres-pvc.yaml
 ```
 
-Finally, we can deploy the Helm chart. We will use the Bitnami's Chart and a values file with the configuration. We have an example in [kubernetes/values.yaml](https://github.com/Gravitate-Health/hapi-fhir-jpaserver-starter-ips/blob/master/kubernetes/values.yaml). Edit the values file to change the password and the PVC name. Then, deploy the Helm chart with the following command:
+Finally, we can deploy the Helm chart. We will use the Bitnami's Chart and a values file with the configuration. We have an example in [kubernetes/values.yaml](https://github.com/Gravitate-Health/hapi-fhir-deployments/blob/main/ips/kubernetes/values.yaml). Edit the values file to change the password and the PVC name. Then, deploy the Helm chart with the following command:
 
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -19,7 +19,7 @@ helm install --render-subchart-notes postgresql-fhir-ips bitnami/postgresql --va
 
 ## HAPI FHIR Helm Deployment
 
-Following the instructions in the [Helm Chart](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/tree/master/charts/hapi-fhir-jpaserver) documentation and proceed with the installation. The [values.yaml](https://github.com/Gravitate-Health/hapi-fhir-jpaserver-starter-ips/blob/master/charts/hapi-fhir-jpaserver/values.yaml) file has been modified for the Gravitate Health platform, you can find the full list of variables in the original repository, below is a list of the changes made:
+Following the instructions in the [Helm Chart](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/tree/master/charts/hapi-fhir-jpaserver) documentation and proceed with the installation. The [values.yaml](https://github.com/Gravitate-Health/hapi-fhir-deployments/blob/main/ips/values.yaml) file has been modified for the Gravitate Health platform, you can find the full list of variables in the original repository, below is a list of the changes made:
 
 | Variable                       | value       |
 |--------------------------------|-------------|
