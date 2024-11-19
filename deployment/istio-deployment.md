@@ -34,6 +34,11 @@ kubectl label namespace default istio-injection=enabled
 kubectl apply -f ./fosps-enviroment/002_gh-gateway.yaml
 ```
 
+5. Patch the IstioIngess service to log the original IP of evry request, for better monitoring and debugging:
+```bash
+kubectl patch svc istio-ingressgateway -n istio-system -p '{"spec":{"externalTrafficPolicy":"Local"}}'
+```
+
 Istio should be installed and working as of this point. You can check everything has deployed correctly running the following command:
 
 ```bash
@@ -61,7 +66,7 @@ replicaset.apps/istio-ingressgateway-f56888458   1         1         1       3m3
 replicaset.apps/istiod-64848b6c78                1         1         1       3m30s
 ```
 
-5. Set up for Let's Encrypt certificate (only if the gateway with domain name was applied, as Let's Encrypt does not issue certificate for IP addresses). First we have to set the ClusterIssuer resource, and then the certificate, so the clusterIssuer starts de challenge for Let's Encrypt.
+1. Set up for Let's Encrypt certificate (only if the gateway with domain name was applied, as Let's Encrypt does not issue certificate for IP addresses). First we have to set the ClusterIssuer resource, and then the certificate, so the clusterIssuer starts de challenge for Let's Encrypt.
 
 Install Istio CertManager
 
