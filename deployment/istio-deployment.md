@@ -17,10 +17,10 @@ cd istio-1.20.2/
 export PATH=$PWD/bin:$PATH
 ```
 
-2. Install Istio operator
+2. Install Istio operator with the [Configuration file](https://github.com/Gravitate-Health/istio/blob/main/kubernetes/base/001_istio-operator.yaml)
 
 ```bash
-istioctl install --set profile=demo -y
+istioctl install --set profile=demo -y -f kubernetes/base/001_istio-operator.yaml
 ```
 
 3. Prepare the `default` namespace for injection
@@ -28,10 +28,10 @@ istioctl install --set profile=demo -y
 kubectl label namespace default istio-injection=enabled
 ```
 
-4. Set up the gateway. We have two options, depending on wheter we have a DNS name or not. For only IP access use [this file](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/002_gh-gateway-ip.yaml). For this example we will use the one [with domain name and certificate](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/002_gh-gateway.yaml):
+4. Set up the gateway. We have two options, depending on wheter we have a DNS name or not. For only IP access use [this file](https://github.com/Gravitate-Health/istio/blob/main/kubernetes/base/002_gh-gateway-ip.yaml). For this example we will use the one [with domain name and certificate](https://github.com/Gravitate-Health/istio/blob/main/kubernetes/base/002_gh-gateway.yaml):
 
 ```bash
-kubectl apply -f ./fosps-enviroment/002_gh-gateway.yaml
+kubectl apply -f ./kubernetes/base/002_gh-gateway.yaml
 ```
 
 5. Patch the IstioIngess service to log the original IP of evry request, for better monitoring and debugging:
@@ -74,12 +74,12 @@ Install Istio CertManager
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
 ```
 
-Set up the [cluster issuer](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/003_cluster-issuer.yaml) (currently using http01 challenge)
+Set up the [cluster issuer](https://github.com/Gravitate-Health/istio/blob/main/kubernetes/base/003_cluster-issuer.yaml) (currently using http01 challenge)
 ```bash
-kubectl apply -f ./fosps-enviroment/003_cluster-issuer.yaml
+kubectl apply -f ./kubernetes/base/003_cluster-issuer.yaml
 ```
 
-Instanciate the [certificate](https://github.com/Gravitate-Health/istio/blob/main/fosps-enviroment/004_letsencrypt-cert.yaml)
+Instanciate the [certificate](https://github.com/Gravitate-Health/istio/blob/main/kubernetes/base/004_letsencrypt-cert.yaml)
 ```bash
-kubectl apply -f ./fosps-enviroment/004_letsencrypt-cert.yaml
+kubectl apply -f ./kubernetes/base/004_letsencrypt-cert.yaml
 ```
