@@ -73,7 +73,16 @@ service/hapi-fhir-jpaserver-ips-postgresql      ClusterIP      10.233.38.60     
 service/hapi-fhir-jpaserver-ips-postgresql-hl   ClusterIP              None            <none>                 5432/TCP             23d
 ```
 
-NOTE: Sometimes, the deployment builds incorrect liveness, readiness and startup endpoints, so the k8s cluster will always receive 404 from these endpoints, and service will never be ready. You can check this is happening if the pods are periodically restarting, or by running `kubectl describe pod POD_NAME`, which will report a 404 status on liveness endpoint.
+NOTE: Kubernetes readiness probes will fail reporting a 404 status on liveness endpoint, as the HAPI FHIR helm chart don't update the path, and we are deploying the HAPI FHIR server behind a path prefix. To solve this, run this command to edit the deployment after the installation or any release upgrade:
+```sh
+kubectl patch deployment fhir-server-epi \
+--type='json' \
+-p='[
+  {"op": "replace", "path": "/spec/template/spec/containers/0/livenessProbe/httpGet/path", "value": "/epi/api/livez"},
+  {"op": "replace", "path": "/spec/template/spec/containers/0/readinessProbe/httpGet/path", "value": "/epi/api/readyz"},
+  {"op": "replace", "path": "/spec/template/spec/containers/0/startupProbe/httpGet/path", "value": "/epi/api/readyz"}
+]'
+```
 
 If this is happening, edit manually the deployment `kubectl edit deployment` and delete the liveness, readiness and startup probes. 
 
