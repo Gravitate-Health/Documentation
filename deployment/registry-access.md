@@ -4,7 +4,9 @@ In order to be able to pull images from a private registry, it is needed that a 
 ```bash
 # Create image-pull-secret
 kubectl create secret docker-registry image-pull-secret --docker-server=gravitate-registry.cr.de-fra.ionos.com --docker-username=gravitatecluster --docker-password="REGISTRY_ACCESS_TOKEN" -n default
+kubectl create secret docker-registry image-pull-secret --docker-server=gravitate-registry.cr.de-fra.ionos.com --docker-username=gravitatecluster --docker-password="REGISTRY_ACCESS_TOKEN" -n monitoring
 
 # Patch default service account with image-pull-secret
 kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "image-pull-secret"}]}' -n default
+kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "image-pull-secret"}]}' -n monitoring
 ```
