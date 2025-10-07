@@ -14,7 +14,7 @@ Finally, we can deploy the Helm chart. We will use the Bitnami's Chart and a val
 
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install --render-subchart-notes postgresql-fhir-ips bitnami/postgresql --values=kubernetes/values.yaml
+helm install --render-subchart-notes postgresql-fhir-ips bitnami/postgresql --values=kubernetes/values.yaml --set global.security.allowInsecureImages=true
 ```
 
 ## HAPI FHIR Helm Deployment
