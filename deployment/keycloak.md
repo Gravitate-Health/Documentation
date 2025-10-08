@@ -18,6 +18,13 @@ kubectl apply -f YAMLs/002_postgres_pvc.yaml
 2. Create a `values.yaml` file to override default values. The secret values will be creates as a kubernetes secret.
 
 ```yaml
+# specify registry, repo and tag. If the image is restricted in any way, change it for another keycloak image
+image:
+  registry: docker.io
+  repository: bitnamilegacy/postgresql
+  tag: 17.2.0-debian
+  pullPolicy: IfNotPresent
+
 # define default database user, name, and password for PostgreSQL deployment
 auth:
   enablePostgresUser: true
