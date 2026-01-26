@@ -19,13 +19,13 @@ Releases version names follow the [Semantic Versioning (SemVer)](https://semver.
 
 ## CI/CD pipelines
 
-Github worflows for Gravitate-Health are published and shared by all repositories in the [reusable-workflows repository](https://github.com/Gravitate-Health/reusable-workflows). The main workflow dows the following tasks:
+Github workflows for Gravitate-Health are published and shared by all repositories in the [reusable-workflows repository](https://github.com/Gravitate-Health/reusable-workflows). The main workflow does the following tasks:
 - Semantic versioning and tag release (if push or pull request to main).
 - Build of Docker image, tagging and push to registry.
 - Security scan with Trivy, scanning vulnerabilities in Docker images and dependencies, detecting secrets leaks and misconfigurations.
 - Automatic deployment to the Development environment.
 
-To develop/test workflow, it is encouraged to use [act](https://nektosact.com/introduction.html) to run and test worflows locally.
+To develop/test workflow, it is encouraged to use [act](https://nektosact.com/introduction.html) to run and test workflows locally.
 
 ## Builds
 

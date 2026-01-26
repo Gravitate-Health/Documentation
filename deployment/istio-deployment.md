@@ -1,6 +1,6 @@
 # Istio Deployment
 
-Istio can be installed using a standalone installer, Helm charts, and Operators. For this project we will use the installer as it is the recommended path for production enviromnents.
+Istio can be installed using a standalone installer, Helm charts, and Operators. For this project we will use the installer as it is the recommended path for production environments.
 
 Steps: 
 
@@ -28,13 +28,13 @@ istioctl install --set profile=demo -y -f kubernetes/base/001_istio-operator.yam
 kubectl label namespace default istio-injection=enabled
 ```
 
-4. Set up the gateway. We have two options, depending on wheter we have a DNS name or not. For only IP access use [this file](https://github.com/Gravitate-Health/istio/blob/main/kubernetes/base/002_gh-gateway-ip.yaml). For this example we will use the one [with domain name and certificate](https://github.com/Gravitate-Health/istio/blob/main/kubernetes/base/002_gh-gateway.yaml):
+4. Set up the gateway. We have two options, depending on whether we have a DNS name or not. For only IP access use [this file](https://github.com/Gravitate-Health/istio/blob/main/kubernetes/base/002_gh-gateway-ip.yaml). For this example we will use the one [with domain name and certificate](https://github.com/Gravitate-Health/istio/blob/main/kubernetes/base/002_gh-gateway.yaml):
 
 ```bash
 kubectl apply -f ./kubernetes/base/002_gh-gateway.yaml
 ```
 
-5. Patch the IstioIngess service to log the original IP of evry request, for better monitoring and debugging:
+5. Patch the IstioIngress service to log the original IP of every request, for better monitoring and debugging:
 ```bash
 kubectl patch svc istio-ingressgateway -n istio-system -p '{"spec":{"externalTrafficPolicy":"Local"}}'
 ```
@@ -79,7 +79,7 @@ Set up the [cluster issuer](https://github.com/Gravitate-Health/istio/blob/main/
 kubectl apply -f ./kubernetes/base/003_cluster-issuer.yaml
 ```
 
-Instanciate the [certificate](https://github.com/Gravitate-Health/istio/blob/main/kubernetes/base/004_letsencrypt-cert.yaml)
+Instantiate the [certificate](https://github.com/Gravitate-Health/istio/blob/main/kubernetes/base/004_letsencrypt-cert.yaml)
 ```bash
 kubectl apply -f ./kubernetes/base/004_letsencrypt-cert.yaml
 ```

@@ -15,7 +15,7 @@ kubectl apply -f YAMLs/002_postgres_pvc.yaml
 ```
 
 
-2. Create a `values.yaml` file to override default values. The secret values will be creates as a kubernetes secret.
+2. Create a `values.yaml` file to override default values. The secret values will be created as a kubernetes secret.
 
 ```yaml
 # specify registry, repo and tag. If the image is restricted in any way, change it for another keycloak image
@@ -47,7 +47,7 @@ helm repo update
 helm install keycloak-helm -f YAMLs/values.yaml bitnami/postgresql
 ```
 
-ANd check everything is installed correctly:
+And check everything is installed correctly:
 
 ```bash
 kubectl get secrets
@@ -144,7 +144,7 @@ The type of the service is _ClusterIP_ which means that the service can only be 
 
 ## Apply istio's VirtualService
 
-In order to be accesible from the internet, the VirtualService must be configured for Istio. Apply the [following yaml file](https://github.com/Gravitate-Health/keycloak/blob/main/YAMLs/007_keycloak-vs.yaml) in the [YAMLs folder for keycloak](https://github.com/Gravitate-Health/keycloak/tree/main/YAMLs)
+In order to be accessible from the internet, the VirtualService must be configured for Istio. Apply the [following yaml file](https://github.com/Gravitate-Health/keycloak/blob/main/YAMLs/007_keycloak-vs.yaml) in the [YAMLs folder for keycloak](https://github.com/Gravitate-Health/keycloak/tree/main/YAMLs)
 
 ```bash
 kubectl apply -f 007_keycloak-vs.yaml

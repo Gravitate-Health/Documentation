@@ -1,14 +1,14 @@
 # Gravitate-Health FOSPS Deployment Documentation
 
-This README will guide the user through the process of deploying FOSPS, with all tghe requirements and needed steps.Through the course of the project, there will these options to deploy FOSPS:
-- Manually to a existing k8s cluster.
+This README will guide the user through the process of deploying FOSPS, with all the requirements and needed steps. Through the course of the project, there will be these options to deploy FOSPS:
+- Manually to an existing k8s cluster.
 - Helm chart (Coming Soon)
 
 ## Native kubernetes deployment
 
 The requirements for FOSPS are:
-- Existing k8s cluster (developed in native kubernetes but should work in any copmlinat distribution)
-- Minimum Hardware resources (acarross the cluster): 16 GB RAM, 4 vCPUs.
+- Existing k8s cluster (developed in native kubernetes but should work in any compliant distribution)
+- Minimum Hardware resources (across the cluster): 16 GB RAM, 4 vCPUs.
 
 The deployment of FOSPS is done in different steps:
 - Deploy Istio.
@@ -19,7 +19,7 @@ The deployment of FOSPS is done in different steps:
 ### Deploy Istio
 ---
 
-Istio depoyment consists in:
+Istio deployment consists of:
 - Downloading Istio
 - Configuring Istio
 - Deploying Istio
@@ -32,7 +32,7 @@ Once all the components have been installed, the certificate is issued, and traf
 ### Configure image registry and secret
 ---
 
-An image registry is needed to store al lthe FOSPS images. After a registry is stablished, the cluster needs an access token to read from a private registry.
+An image registry is needed to store all the FOSPS images. After a registry is established, the cluster needs an access token to read from a private registry.
 
 Refer to the [registry access Readme](./registry-access.md) to configure the cluster to access the private registry.
 
@@ -68,9 +68,9 @@ List of services to deploy:
 - Other:
   - [Swagger UI](https://github.com/Gravitate-Health/swagger-deployment)
   - [Keycloak Registration](https://github.com/Gravitate-Health/keycloak-registration)
-  - [Therminology shortlist](https://github.com/Gravitate-Health/terminology-service)
+  - [Terminology shortlist](https://github.com/Gravitate-Health/terminology-service)
 
-For each service, you will find a folder in each repository called `kubernetes` or `yamls`. These service have generic deployments and the process is always the same. The kubernetes resources must be deployed in certain order:
+For each service, you will find a folder in each repository called `kubernetes` or `yamls`. These services have generic deployments and the process is always the same. The kubernetes resources must be deployed in a certain order:
 
 1. Secrets
 2. ConfigMaps
@@ -79,4 +79,4 @@ For each service, you will find a folder in each repository called `kubernetes` 
 5. Deployment/Cronjob
 6. Virtual Service
 
-Apply the files of each repository and everything will be deployed. Refer to each repository README to edit configuration, environment variables and see further deployment details .
+Apply the files of each repository and everything will be deployed. Refer to each repository README to edit configuration, environment variables and see further deployment details.
