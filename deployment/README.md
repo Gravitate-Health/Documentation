@@ -14,6 +14,7 @@ The deployment of FOSPS is done in different steps:
 - Deploy Istio.
 - Configure Registry and image-pull-secret
 - Deploy Keycloak
+- Deploy FHIR services (if not available)
 - Deploy FOSPS services
 
 ### Deploy Istio
@@ -70,7 +71,7 @@ List of services to deploy:
   - [Keycloak Registration](https://github.com/Gravitate-Health/keycloak-registration)
   - [Terminology shortlist](https://github.com/Gravitate-Health/terminology-service)
 
-For each service, you will find a folder in each repository called `kubernetes` or `yamls`. These services have generic deployments and the process is always the same. The kubernetes resources must be deployed in a certain order:
+For each service, you will find a folder in each repository called `kubernetes`. These services have generic deployments and the process is always the same. The kubernetes resources must be deployed in a certain order:
 
 1. Secrets
 2. ConfigMaps
